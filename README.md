@@ -6,7 +6,7 @@
 ## Start docker containers
 ```
 cd nginx-php-fpm-adminer-mysql/.docker/
-docker-compose up --build --remove-orphans
+docker-compose up --build --remove-orphans -d
 ```
 
 ## Open hyperlink in web browser
