@@ -1,6 +1,6 @@
 # Setup instructions
-## Append hostname to /etc/hosts
-``` File: /etc/hosts
+## Append hostname to /etc/hosts file
+```
 127.0.0.1	php-docker.local
 ```
 ## Start docker containers
