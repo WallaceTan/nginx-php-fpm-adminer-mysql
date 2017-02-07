@@ -5,7 +5,7 @@
 ```
 ## Start docker containers
 ```
-cd [project_root]/.docker/
+cd nginx-php-fpm-adminer-mysql/.docker/
 docker-compose up --build --remove-orphans
 ```
 
