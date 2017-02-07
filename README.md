@@ -8,4 +8,5 @@ cd [project_root]/.docker/
 docker-compose up --build --remove-orphans
 
 ## Open hyperlink in web browser
-http://php-docker.local/autologin.php
+- http://php-docker.local/autologin.php
+- http://php-docker.local/mysqli_connect.php

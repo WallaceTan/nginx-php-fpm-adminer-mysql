@@ -10,10 +10,11 @@ function adminer_object() {
                 return 'mysql';
             }
         }
-        $_GET['server'] = 'mysql';
-        $_GET['username'] = 'root';
-        $_GET['password'] = 'P@ssw0rd';
-        $_GET['db'] = 'mysql';
+
+        $_GET['server'] = $_ENV['MYSQL_SERVER'];
+        $_GET['username'] = $_ENV['MYSQL_USER'];
+        $_GET['password'] = $_ENV['MYSQL_PASS'];
+        $_GET['db'] = $_ENV['MYSQL_DB'];
         return new AdminerSoftware;
     }
     require_once("./adminer-4.2.5.php");
