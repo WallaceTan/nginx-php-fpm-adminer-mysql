@@ -1,0 +1,64 @@
+web:
+  image: nginx:latest
+  ports:
+    - "80:80"
+    - "443:443"
+  volumes:
+    - ../volumes/website:/var/www/html
+    - ../volumes/website/no_hostname.html:/usr/share/nginx/html/no_hostname.html
+    - ../volumes/conf.d/site.conf:/etc/nginx/conf.d/site.conf
+    - ../volumes/conf.d/no_hostname.conf:/etc/nginx/conf.d/default.conf
+  links:
+    - php
+#  stdin_open: true
+#  tty: true
+# working_dir: /usr/src/ansible
+#  container_name: nginx-reverse-proxy
+#  hostname: nginx
+
+# dns: 192.168.130.144
+#  volumes:
+#  - ~/.ssh/keys:/usr/src/ansible/ssh_keys
+#  - ~/Projects/nectar-ansible:/usr/src/ansible
+
+## https://perchrunway.com/blog/2017-01-19-getting-started-with-docker-for-local-development
+php:
+  build: php
+  dockerfile: Dockerfile
+  volumes:
+    - ../volumes/website:/var/www/html
+  links:
+    - mysql
+## http://stackoverflow.com/questions/1676688/php-mysql-connection-not-working-2002-no-such-file-or-directory
+## php -r "new PDO('mysql:host=127.0.0.1;port=3306;charset=utf8;dbname=mysql', 'root', 'P@ssw0rd');"
+## mysql -h 127.0.0.1 -u root -pP@ssw0rd
+## ----------
+## php -r "new PDO('mysql:host=127.0.0.1;port=33066;charset=utf8;dbname=mysql', 'root', 'P@ssw0rd');"
+## mysql -h 127.0.0.1 -P 33066 -u root -pP@ssw0rd
+## telnet 127.0.0.1 33066
+## ----------
+## php -r "new PDO('mysql:host=mysql;charset=utf8;dbname=mysql', 'root', 'P@ssw0rd');"
+## mysql -h mysql -P 3306 -u root -pP@ssw0rd
+## telnet mysql 3306
+#adminer:
+#  image: clue/adminer:latest
+#  ports:
+#    - "80:80"
+
+mysql:
+# image: mysql/mysql-server
+  image: mysql:5.7
+# container_name: mysql-server
+# hostname: mysql-server
+#  ports:
+#    - "3306:3306" # I have tried both ports and expose "3306". Still doesn't work
+#    - "33066:3306" # Works: telnet 127.0.0.1 33066
+  environment:
+    MYSQL_ROOT_PASSWORD: P@ssw0rd
+#   - MYSQL_ROOT_PASSWORD="secret"
+#   - MYSQL_USER=django
+#   - MYSQL_PASSWORD=secret
+#   - MYSQL_DATABASE=myAppDB
+  volumes:
+    - ../volumes/tmp/db_data:/var/lib/mysql
+## docker run --name mysql-server -e MYSQL_ROOT_PASSWORD=P@ssw0rd -d mysql:latest
